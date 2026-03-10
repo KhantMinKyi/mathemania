@@ -170,8 +170,16 @@ export default function FrontendLayout({
                 </div>
                 <div className="border-t border-slate-200">
                     <div className="mx-auto flex w-full max-w-6xl flex-col gap-2 px-4 py-4 text-xs text-slate-500 md:flex-row md:items-center md:justify-between">
-                        <span>Copyright © 2026 Mathemania</span>
-                        <span>Developed by BFI Education's Developer</span>
+                        <div className="flex flex-col gap-2 md:flex-row md:items-center md:gap-4">
+                            <span>Copyright © 2026 Mathemania</span>
+                            <Link
+                                href="/privacy-policy"
+                                className="text-slate-500 hover:text-slate-900"
+                            >
+                                Privacy Policy
+                            </Link>
+                        </div>
+                        <span>Developed by BFI Education Services's Developer</span>
                     </div>
                 </div>
             </footer>

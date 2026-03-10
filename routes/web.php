@@ -14,6 +14,10 @@ Route::get('rules-and-regulation', function () {
     return Inertia::render('rules-and-regulation');
 })->name('rules-and-regulation');
 
+Route::get('privacy-policy', function () {
+    return Inertia::render('privacy-policy');
+})->name('privacy-policy');
+
 Route::prefix('administration-panel')
     ->middleware(['auth', 'verified'])
     ->group(function () {
