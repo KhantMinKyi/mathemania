@@ -18,6 +18,10 @@ Route::get('privacy-policy', function () {
     return Inertia::render('privacy-policy');
 })->name('privacy-policy');
 
+Route::get('sample-questions-and-answers', function () {
+    return Inertia::render('sample-questions-and-answers');
+})->name('sample-questions-and-answers');
+
 Route::prefix('administration-panel')
     ->middleware(['auth', 'verified'])
     ->group(function () {
