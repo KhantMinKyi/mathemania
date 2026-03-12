@@ -27,6 +27,11 @@ const baseNavItems: NavItem[] = [
         href: '/administration-panel/simple-q-a',
         icon: FileText,
     },
+    {
+        title: 'Exam Results',
+        href: '/administration-panel/exam-results',
+        icon: FileText,
+    },
 ];
 
 const footerNavItems: NavItem[] = [

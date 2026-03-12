@@ -31,6 +31,19 @@ Route::get('sample-questions/{category}/{type}', [
     'download',
 ])->where(['category' => '(primary|lower-secondary|upper-secondary)', 'type' => '(questions|answers)']);
 
+Route::get('exam-results', function () {
+    $files = app(\App\Http\Controllers\Admin\ExamResultsController::class)->filesMeta();
+
+    return Inertia::render('exam-results', [
+        'files' => $files,
+    ]);
+})->name('exam-results');
+
+Route::get('exam-results/{category}/{type}', [
+    \App\Http\Controllers\Admin\ExamResultsController::class,
+    'download',
+])->where(['category' => '(primary|lower-secondary|upper-secondary)', 'type' => '(results)']);
+
 Route::fallback(function () {
     return Inertia::render('errors/404')->toResponse(request())->setStatusCode(404);
 });
@@ -56,6 +69,21 @@ Route::prefix('administration-panel')
             \App\Http\Controllers\Admin\SampleQuestionsController::class,
             'destroy',
         ])->name('admin.simple-q-a.destroy');
+
+        Route::get('exam-results', [
+            \App\Http\Controllers\Admin\ExamResultsController::class,
+            'index',
+        ])->name('admin.exam-results');
+
+        Route::post('exam-results', [
+            \App\Http\Controllers\Admin\ExamResultsController::class,
+            'store',
+        ])->name('admin.exam-results.store');
+
+        Route::delete('exam-results', [
+            \App\Http\Controllers\Admin\ExamResultsController::class,
+            'destroy',
+        ])->name('admin.exam-results.destroy');
 
         Route::middleware('admin')->group(function () {
             Route::get('users', [

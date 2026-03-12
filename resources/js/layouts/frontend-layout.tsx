@@ -6,6 +6,7 @@ const navItems = [
     { label: 'Home', href: '/' },
     { label: 'Register Here', href: '/register-here' },
     { label: 'Rules and Regulation', href: '/rules-and-regulation' },
+    { label: 'Exam Results', href: '/exam-results' },
 ];
 
 export default function FrontendLayout({

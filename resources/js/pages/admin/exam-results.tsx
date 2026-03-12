@@ -1,6 +1,6 @@
 import AppLayout from '@/layouts/app-layout';
-import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { type BreadcrumbItem } from '@/types';
+import { Head, router, useForm, usePage } from '@inertiajs/react';
 
 type FileMeta = {
     key: string;
@@ -13,10 +13,10 @@ type FileMeta = {
 
 const breadcrumbs: BreadcrumbItem[] = [
     { title: 'Dashboard', href: '/administration-panel/dashboard' },
-    { title: 'Simple Q&A', href: '/administration-panel/simple-q-a' },
+    { title: 'Exam Results', href: '/administration-panel/exam-results' },
 ];
 
-export default function SimpleQA() {
+export default function ExamResultsAdmin() {
     const { files } = usePage<{ files: FileMeta[] }>().props;
     const {
         data,
@@ -25,26 +25,25 @@ export default function SimpleQA() {
         processing,
         errors,
         recentlySuccessful,
-    } =
-        useForm<{
-            category: string;
-            type: string;
-            file: File | null;
-        }>({
-            category: 'primary',
-            type: 'questions',
-            file: null,
-        });
+    } = useForm<{
+        category: string;
+        type: string;
+        file: File | null;
+    }>({
+        category: 'primary',
+        type: 'results',
+        file: null,
+    });
 
     const handleSubmit = (event: React.FormEvent) => {
         event.preventDefault();
-        post('/administration-panel/simple-q-a', {
+        post('/administration-panel/exam-results', {
             forceFormData: true,
         });
     };
 
     const handleDelete = (category: string, type: string) => {
-        router.delete('/administration-panel/simple-q-a', {
+        router.delete('/administration-panel/exam-results', {
             data: { category, type },
             preserveScroll: true,
         });
@@ -52,16 +51,15 @@ export default function SimpleQA() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Simple Q&A" />
+            <Head title="Exam Results" />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
                 <div className="rounded-2xl border border-sidebar-border/70 bg-white p-6 shadow-sm dark:border-sidebar-border dark:bg-sidebar">
                     <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100">
-                        Upload Questions & Answers
+                        Upload Exam Results
                     </h2>
                     <p className="mt-2 text-sm text-slate-600 dark:text-slate-300">
-                        Upload Excel files for Primary, Lower-secondary, and
-                        Upper-secondary categories. Files are stored in
-                        `storage/app/sample-questions`.
+                        Upload Excel files for Primary, Lower-secondary, and Upper-secondary exam results. Files are stored in
+                        `storage/app/exam-results`.
                     </p>
 
                     <form
@@ -99,8 +97,7 @@ export default function SimpleQA() {
                                     setData('type', event.target.value)
                                 }
                             >
-                                <option value="questions">Questions</option>
-                                <option value="answers">Answers</option>
+                                <option value="results">Results</option>
                             </select>
                         </div>
                         <div className="grid gap-2">
@@ -167,12 +164,16 @@ export default function SimpleQA() {
                                         <td className="py-3 capitalize">
                                             {file.category}
                                         </td>
-                                        <td className={`py-3 capitalize ${file.type == 'questions' ? " text-blue-500" : ' text-gray-700'}`}
-                                        >
-                                            {}
+                                        <td className="py-3 capitalize">
                                             {file.type}
                                         </td>
-                                        <td className={`py-3  ${file.exists ? " text-green-700" : ' text-red-500'}`}>
+                                        <td
+                                            className={`py-3 ${
+                                                file.exists
+                                                    ? ' text-green-700'
+                                                    : ' text-red-500'
+                                            }`}
+                                        >
                                             {file.exists ? 'Uploaded' : 'Missing'}
                                         </td>
                                         <td className="py-3">
