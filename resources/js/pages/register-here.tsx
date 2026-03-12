@@ -251,15 +251,15 @@ export default function RegisterHere() {
                         <div className="mt-6 grid gap-4 sm:grid-cols-2">
                             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
                                 <img
-                                    src="/img/mathemania.png"
-                                    alt="Mathemania"
+                                    src="/img/kpay.jpg"
+                                    alt="KBZ Pay"
                                     className="h-28 w-full object-contain"
                                 />
                             </div>
                             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
                                 <img
-                                    src="/img/bfi.webp"
-                                    alt="BFI Education Services"
+                                    src="/img/cb.jpg"
+                                    alt="CB Bank"
                                     className="h-28 w-full object-contain"
                                 />
                             </div>

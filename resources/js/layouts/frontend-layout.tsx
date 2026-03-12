@@ -36,14 +36,14 @@ export default function FrontendLayout({
                 className={`sticky top-0 z-40 transition-colors duration-300 ${
                     isSolid
                         ? 'border-b border-slate-200 bg-white/95 text-slate-900 backdrop-blur'
-                        : 'border-b border-transparent bg-transparent text-white'
+                        : 'border-b border-transparent bg-transparent text-black hover:text-cyan-700'
                 }`}
             >
                 <div className="mx-auto flex h-20 max-w-6xl items-center justify-between px-4">
                     <Link
                         href="/"
                         className={`flex items-center gap-2 ${
-                            isSolid ? 'text-slate-900' : 'text-white'
+                            isSolid ? 'text-slate-900' : 'text-black hover:text-cyan-700'
                         }`}
                         onClick={() => setMobileOpen(false)}
                     >
@@ -54,8 +54,8 @@ export default function FrontendLayout({
                         type="button"
                         className={`rounded-md border px-3 py-2 text-sm font-medium md:hidden ${
                             isSolid
-                                ? 'border-slate-200 text-slate-700'
-                                : 'border-white/40 text-white'
+                                ? 'border-black text-black hover:text-cyan-700'
+                                : 'border-cyan-700 text-cyan-700 hover:text-cyan-700'
                         }`}
                         onClick={() => setMobileOpen((prev) => !prev)}
                         aria-expanded={mobileOpen}
@@ -75,8 +75,8 @@ export default function FrontendLayout({
                                             ? 'text-cyan-700'
                                             : 'text-cyan-700'
                                         : isSolid
-                                          ? 'text-slate-600 hover:text-slate-900'
-                                          : 'text-white/80 hover:text-white'
+                                          ? 'text-black hover:text-cyan-700'
+                                          : 'text-black hover:text-cyan-700'
                                 }
                             >
                                 {item.label}
@@ -99,7 +99,7 @@ export default function FrontendLayout({
                                 className={
                                     isActive(item.href)
                                         ? 'text-cyan-700'
-                                        : 'text-slate-600 hover:text-slate-900'
+                                        : 'text-black hover:text-cyan-700'
                                 }
                                 onClick={() => setMobileOpen(false)}
                             >
