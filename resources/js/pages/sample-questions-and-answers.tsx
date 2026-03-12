@@ -1,28 +1,38 @@
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 
 const categories = [
     {
+        key: 'primary',
         title: 'Primary',
         description: 'Sample questions and answers for primary level.',
-        questions: '/sample-questions/primary-questions.xlsx',
-        answers: '/sample-questions/primary-answers.xlsx',
     },
     {
+        key: 'lower-secondary',
         title: 'Lower-secondary',
         description: 'Sample questions and answers for lower-secondary level.',
-        questions: '/sample-questions/lower-secondary-questions.xlsx',
-        answers: '/sample-questions/lower-secondary-answers.xlsx',
     },
     {
+        key: 'upper-secondary',
         title: 'Upper-secondary',
         description: 'Sample questions and answers for upper-secondary level.',
-        questions: '/sample-questions/upper-secondary-questions.xlsx',
-        answers: '/sample-questions/upper-secondary-answers.xlsx',
     },
 ];
 
+type FileMeta = {
+    key: string;
+    category: string;
+    type: string;
+    exists: boolean;
+    downloadUrl: string | null;
+};
+
 export default function SampleQuestionsAndAnswers() {
+    const { files } = usePage<{ files: FileMeta[] }>().props;
+    const fileMap = new Map(
+        files.map((file) => [file.category + '-' + file.type, file]),
+    );
+
     return (
         <FrontendLayout>
             <Head title="Sample Questions and Answers">
@@ -60,6 +70,19 @@ export default function SampleQuestionsAndAnswers() {
 
                 <div className="mt-10 grid gap-6 md:grid-cols-3">
                     {categories.map((category) => (
+                        (() => {
+                            const questions = fileMap.get(
+                                category.key + '-questions',
+                            );
+                            const answers = fileMap.get(
+                                category.key + '-answers',
+                            );
+
+                            if (!questions?.exists && !answers?.exists) {
+                                return null;
+                            }
+
+                            return (
                         <div
                             key={category.title}
                             className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
@@ -71,20 +94,26 @@ export default function SampleQuestionsAndAnswers() {
                                 {category.description}
                             </p>
                             <div className="mt-6 space-y-3">
-                                <a
-                                    href={category.questions}
-                                    className="block rounded-full border border-slate-200 px-4 py-2 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
-                                >
-                                    Questions (Excel)
-                                </a>
-                                <a
-                                    href={category.answers}
-                                    className="block rounded-full bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
-                                >
-                                    Answers (Excel)
-                                </a>
+                                {questions?.exists && questions.downloadUrl && (
+                                    <a
+                                        href={questions.downloadUrl}
+                                        className="block rounded-full border border-slate-200 px-4 py-2 text-center text-sm font-semibold text-slate-700 transition hover:border-slate-300 hover:text-slate-900"
+                                    >
+                                        Questions (Excel)
+                                    </a>
+                                )}
+                                {answers?.exists && answers.downloadUrl && (
+                                    <a
+                                        href={answers.downloadUrl}
+                                        className="block rounded-full bg-slate-900 px-4 py-2 text-center text-sm font-semibold text-white transition hover:bg-slate-800"
+                                    >
+                                        Answers (Excel)
+                                    </a>
+                                )}
                             </div>
                         </div>
+                            );
+                        })()
                     ))}
                 </div>
             </section>
