@@ -22,6 +22,10 @@ Route::get('sample-questions-and-answers', function () {
     return Inertia::render('sample-questions-and-answers');
 })->name('sample-questions-and-answers');
 
+Route::fallback(function () {
+    return Inertia::render('errors/404')->toResponse(request())->setStatusCode(404);
+});
+
 Route::prefix('administration-panel')
     ->middleware(['auth', 'verified'])
     ->group(function () {
