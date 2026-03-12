@@ -6,10 +6,26 @@ type StepsTab = 'en' | 'mm' | 'bank';
 
 export default function RegisterHere() {
     const [activeTab, setActiveTab] = useState<StepsTab>('en');
+    const [activeImage, setActiveImage] = useState<string | null>(null);
 
     return (
         <FrontendLayout>
-            <Head title="Mathemania Registration" />
+            <Head title="Mathemania Registration">
+                <meta
+                    name="description"
+                    content="Mathemania registration steps, bank account details, and official registration form link."
+                />
+                <meta
+                    name="keywords"
+                    content="Mathemania registration, BFI Education Services, math competition registration, Myanmar"
+                />
+                <meta property="og:title" content="Mathemania Registration" />
+                <meta
+                    property="og:description"
+                    content="Follow the official Mathemania registration steps and submit your form."
+                />
+                <meta property="og:type" content="website" />
+            </Head>
             <section className="mx-auto w-full max-w-6xl px-4 py-10">
                 <header className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
@@ -253,14 +269,16 @@ export default function RegisterHere() {
                                 <img
                                     src="/img/kpay.jpg"
                                     alt="KBZ Pay"
-                                    className="h-28 w-full object-contain"
+                                    className="h-28 w-full cursor-zoom-in object-contain"
+                                    onClick={() => setActiveImage('/img/kpay.jpg')}
                                 />
                             </div>
                             <div className="overflow-hidden rounded-2xl border border-slate-200 bg-slate-50 p-4">
                                 <img
                                     src="/img/cb.jpg"
                                     alt="CB Bank"
-                                    className="h-28 w-full object-contain"
+                                    className="h-28 w-full cursor-zoom-in object-contain"
+                                    onClick={() => setActiveImage('/img/cb.jpg')}
                                 />
                             </div>
                         </div>
@@ -277,6 +295,25 @@ export default function RegisterHere() {
                     </div>
                 </div>
             </section>
+            {activeImage && (
+                <div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
+                    onClick={() => setActiveImage(null)}
+                    role="dialog"
+                    aria-modal="true"
+                >
+                    <div
+                        className="w-full max-w-2xl rounded-3xl bg-white p-4 shadow-xl md:p-6"
+                        onClick={(event) => event.stopPropagation()}
+                    >
+                        <img
+                            src={activeImage}
+                            alt="Preview"
+                            className="h-auto w-full object-contain"
+                        />
+                    </div>
+                </div>
+            )}
         </FrontendLayout>
     );
 }

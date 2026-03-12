@@ -9,7 +9,22 @@ export default function RulesAndRegulation() {
 
     return (
         <FrontendLayout>
-            <Head title="Rules and Regulation" />
+            <Head title="Rules and Regulation">
+                <meta
+                    name="description"
+                    content="Mathemania competition rules, eligibility, schedules, venues, awards, and registration details."
+                />
+                <meta
+                    name="keywords"
+                    content="Mathemania rules, math competition, eligibility, registration, Myanmar"
+                />
+                <meta property="og:title" content="Mathemania Rules and Regulations" />
+                <meta
+                    property="og:description"
+                    content="Read the official Mathemania rules and regulations in English and Myanmar."
+                />
+                <meta property="og:type" content="website" />
+            </Head>
             <section className="mx-auto w-full max-w-6xl px-4 py-10">
                 <header className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
