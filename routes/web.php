@@ -1,9 +1,18 @@
 <?php
 
+use App\Models\CompetitionTimeline;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 Route::get('/', function () {
-    return Inertia::render('welcome');
+    $timelines = CompetitionTimeline::query()
+        ->orderBy('order')
+        ->orderBy('id')
+        ->get();
+
+    return Inertia::render('welcome', [
+        'timelines' => $timelines,
+    ]);
 })->name('home');
 
 Route::get('register-here', function () {
@@ -52,7 +61,20 @@ Route::prefix('administration-panel')
     ->middleware(['auth', 'verified'])
     ->group(function () {
         Route::get('dashboard', function () {
-            return Inertia::render('dashboard');
+            $timelineCount = CompetitionTimeline::query()->count();
+            $userCount = User::query()->count();
+            $nextTimeline = CompetitionTimeline::query()
+                ->whereNotNull('primary_date')
+                ->orderBy('primary_date')
+                ->first();
+
+            return Inertia::render('dashboard', [
+                'stats' => [
+                    'timelines' => $timelineCount,
+                    'users' => $userCount,
+                ],
+                'nextTimeline' => $nextTimeline,
+            ]);
         })->name('dashboard');
 
         Route::get('simple-q-a', [
@@ -86,6 +108,26 @@ Route::prefix('administration-panel')
         ])->name('admin.exam-results.destroy');
 
         Route::middleware('admin')->group(function () {
+            Route::get('competition-timeline', [
+                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+                'index',
+            ])->name('admin.competition-timeline');
+
+            Route::post('competition-timeline', [
+                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+                'store',
+            ])->name('admin.competition-timeline.store');
+
+            Route::put('competition-timeline/{competitionTimeline}', [
+                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+                'update',
+            ])->name('admin.competition-timeline.update');
+
+            Route::delete('competition-timeline/{competitionTimeline}', [
+                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+                'destroy',
+            ])->name('admin.competition-timeline.destroy');
+
             Route::get('users', [
                 \App\Http\Controllers\Admin\UserController::class,
                 'index',

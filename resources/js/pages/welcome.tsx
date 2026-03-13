@@ -1,11 +1,22 @@
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 
 const heroVideoSrc =
     '/video/Mathemania-Event-Small-Size%20(1).mp4';
 
 type AnnouncementTab = 'en' | 'mm';
+
+type Timeline = {
+    id: number;
+    order: number;
+    label: string;
+    title: string;
+    primary_label: string | null;
+    primary_date: string | null;
+    secondary_label: string | null;
+    secondary_date: string | null;
+};
 
 const examCenters = [
     {
@@ -26,6 +37,7 @@ const examCenters = [
 ];
 
 export default function Welcome() {
+    const { timelines = [] } = usePage<{ timelines?: Timeline[] }>().props;
     const [activeTab, setActiveTab] = useState<AnnouncementTab>('en');
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [carouselIndex, setCarouselIndex] = useState(0);
@@ -42,6 +54,52 @@ export default function Welcome() {
             inline: 'center',
             block: 'nearest',
         });
+    };
+
+    const fallbackTimelines: Timeline[] = [
+        {
+            id: 1,
+            order: 1,
+            label: 'Registration',
+            title: 'Registration Window',
+            primary_label: 'Starts',
+            primary_date: '2025-07-25',
+            secondary_label: 'Closes',
+            secondary_date: '2025-08-31',
+        },
+        {
+            id: 2,
+            order: 2,
+            label: 'Competition',
+            title: 'Competition Date',
+            primary_label: null,
+            primary_date: '2025-09-13',
+            secondary_label: 'Results',
+            secondary_date: '2025-10-15',
+        },
+        {
+            id: 3,
+            order: 3,
+            label: 'Ceremony',
+            title: 'Awarding Ceremony',
+            primary_label: null,
+            primary_date: '2025-10-25',
+            secondary_label: null,
+            secondary_date: null,
+        },
+    ];
+
+    const timelineItems = timelines.length > 0 ? timelines : fallbackTimelines;
+
+    const formatDate = (value?: string | null) => {
+        if (!value) return null;
+        const date = new Date(value);
+        if (Number.isNaN(date.getTime())) return value;
+        return new Intl.DateTimeFormat('en-US', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        }).format(date);
     };
 
     return (
@@ -252,74 +310,53 @@ export default function Welcome() {
                 <div className="relative mt-10">
                     <div className="absolute left-6 top-0 hidden h-full w-px bg-slate-200 md:block" />
                     <div className="grid gap-6 md:gap-8">
-                        <div className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:pl-16">
-                            <div className="absolute left-2 top-6 hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-900 md:flex">
-                                1
-                            </div>
-                            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-                                        Registration
-                                    </p>
-                                    <h3 className="mt-2 text-lg font-semibold text-slate-900">
-                                        Registration Window
-                                    </h3>
-                                </div>
-                                <div className="flex flex-wrap gap-3 text-sm text-slate-600">
-                                    <span className="rounded-full border border-slate-200 px-3 py-1">
-                                        Starts: 25 July 2025
-                                    </span>
-                                    <span className="rounded-full border border-slate-200 px-3 py-1">
-                                        Closes: 31 August 2025
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                        {timelineItems.map((timeline, index) => {
+                            const primaryDate = formatDate(
+                                timeline.primary_date,
+                            );
+                            const secondaryDate = formatDate(
+                                timeline.secondary_date,
+                            );
 
-                        <div className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:pl-16">
-                            <div className="absolute left-2 top-6 hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-900 md:flex">
-                                2
-                            </div>
-                            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-                                        Competition
-                                    </p>
-                                    <h3 className="mt-2 text-lg font-semibold text-slate-900">
-                                        Competition Date
-                                    </h3>
+                            return (
+                                <div
+                                    key={timeline.id}
+                                    className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:pl-16"
+                                >
+                                    <div className="absolute left-2 top-6 hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-900 md:flex">
+                                        {index + 1}
+                                    </div>
+                                    <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+                                        <div>
+                                            <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
+                                                {timeline.label}
+                                            </p>
+                                            <h3 className="mt-2 text-lg font-semibold text-slate-900">
+                                                {timeline.title}
+                                            </h3>
+                                        </div>
+                                        <div className="flex flex-wrap gap-3 text-sm text-slate-600">
+                                            {primaryDate && (
+                                                <span className="rounded-full border border-slate-200 px-3 py-1">
+                                                    {timeline.primary_label
+                                                        ? `${timeline.primary_label}: `
+                                                        : ''}
+                                                    {primaryDate}
+                                                </span>
+                                            )}
+                                            {secondaryDate && (
+                                                <span className="rounded-full border border-slate-200 px-3 py-1">
+                                                    {timeline.secondary_label
+                                                        ? `${timeline.secondary_label}: `
+                                                        : ''}
+                                                    {secondaryDate}
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="flex flex-wrap gap-3 text-sm text-slate-600">
-                                    <span className="rounded-full border border-slate-200 px-3 py-1">
-                                        13 September 2025
-                                    </span>
-                                    <span className="rounded-full border border-slate-200 px-3 py-1">
-                                        Results: 15 October 2025
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div className="relative rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:pl-16">
-                            <div className="absolute left-2 top-6 hidden h-8 w-8 items-center justify-center rounded-full border border-slate-200 bg-white text-sm font-semibold text-slate-900 md:flex">
-                                3
-                            </div>
-                            <div className="flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-                                <div>
-                                    <p className="text-xs font-semibold uppercase tracking-[0.25em] text-slate-500">
-                                        Ceremony
-                                    </p>
-                                    <h3 className="mt-2 text-lg font-semibold text-slate-900">
-                                        Awarding Ceremony
-                                    </h3>
-                                </div>
-                                <div className="flex flex-wrap gap-3 text-sm text-slate-600">
-                                    <span className="rounded-full border border-slate-200 px-3 py-1">
-                                        25 October 2025
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                            );
+                        })}
                     </div>
                 </div>
             </section>

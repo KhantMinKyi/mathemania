@@ -13,7 +13,14 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { BookOpen, Folder, LayoutGrid, FileText, Users } from 'lucide-react';
+import {
+    BookOpen,
+    CalendarRange,
+    FileText,
+    Folder,
+    LayoutGrid,
+    Users,
+} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const baseNavItems: NavItem[] = [
@@ -54,6 +61,11 @@ export function AppSidebar() {
         ...baseNavItems,
         ...(isAdmin
             ? [
+                  {
+                      title: 'Competition Timeline',
+                      href: '/administration-panel/competition-timeline',
+                      icon: CalendarRange,
+                  },
                   {
                       title: 'Users',
                       href: '/administration-panel/users',
