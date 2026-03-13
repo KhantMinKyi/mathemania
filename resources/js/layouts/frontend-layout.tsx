@@ -18,13 +18,18 @@ export default function FrontendLayout({
     const [isScrolled, setIsScrolled] = useState(false);
 
     useEffect(() => {
+        document.documentElement.classList.add('frontend-typography');
+
         const onScroll = () => {
             setIsScrolled(window.scrollY > 16);
         };
 
         onScroll();
         window.addEventListener('scroll', onScroll, { passive: true });
-        return () => window.removeEventListener('scroll', onScroll);
+        return () => {
+            window.removeEventListener('scroll', onScroll);
+            document.documentElement.classList.remove('frontend-typography');
+        };
     }, []);
     const isActive = (href: string) =>
         href === '/' ? url === '/' : url.startsWith(href);
@@ -32,7 +37,7 @@ export default function FrontendLayout({
     const isSolid = isScrolled || !transparentHeader;
 
     return (
-        <div className="flex min-h-screen flex-col font-bold bg-cyan-50 text-slate-900">
+        <div className="flex min-h-screen flex-col bg-cyan-50 font-medium text-slate-900">
             <header
                 className={`sticky top-0 z-40 transition-colors duration-300 ${
                     isSolid
