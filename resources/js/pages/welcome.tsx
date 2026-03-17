@@ -18,6 +18,15 @@ type Timeline = {
     secondary_date: string | null;
 };
 
+type Announcement = {
+    id: number;
+    heading: string;
+    title: string;
+    content_en: string;
+    content_mm: string;
+    is_active: boolean;
+};
+
 const examCenters = [
     {
         name: 'SKT International School',
@@ -37,7 +46,10 @@ const examCenters = [
 ];
 
 export default function Welcome() {
-    const { timelines = [] } = usePage<{ timelines?: Timeline[] }>().props;
+    const { timelines = [], announcement } = usePage<{
+        timelines?: Timeline[];
+        announcement?: Announcement | null;
+    }>().props;
     const [activeTab, setActiveTab] = useState<AnnouncementTab>('en');
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
     const [carouselIndex, setCarouselIndex] = useState(0);
@@ -90,6 +102,57 @@ export default function Welcome() {
     ];
 
     const timelineItems = timelines.length > 0 ? timelines : fallbackTimelines;
+
+    const fallbackAnnouncement: Announcement = {
+        id: 0,
+        heading: 'IMPORTANT ANNOUCEMENT!',
+        title: 'Mathemania 2025–2026',
+        content_en: `Dear participants,
+
+Mathemania is an annual math-based puzzle competition organized by BFI Education Services since 2005. It comprises three levels, each featuring a variety of mathematics-based puzzles.
+
+The purpose of this contest is to boost enthusiasm for mathematics and strengthen students’ analytical, visual, critical thinking, and problem-solving skills. It also inspires students to develop perseverance and resilience. Mathemania challenges mathematics enthusiasts and encourages them to appreciate the subject in diverse and engaging ways.
+
+We are excited to host the 21st MATHEMANIA (2025–2026) on 13 September 2025 at three campuses across Myanmar: SKT International School (Riverside Campus) in Yangon, Naypyidaw International School of Acumen (NISA) in Naypyidaw, and Mandalay International School of Acumen (MISA) in Mandalay.
+
+Please kindly read the contest information and rules & regulations, and sign up!
+
+With best wishes,
+BFI Education Services`,
+        content_mm: `မင်္ဂလာပါ စိတ်ပါဝင်စားသော ကျောင်းသား/သူများနှင့် လူကြီးမိဘများခင်ဗျ,
+
+Mathemania ပြိုင်ပွဲသည် ၂၀၀၅ ခုနှစ်မှစတင်၍ BFI Education Services Co.Ltd မှ နှစ်စဉ်ကျင်းပသော ပြိုင်ပွဲတစ်ခုဖြစ်ပြီး မူလတန်း၊ အလယ်တန်းနှင့် အထက်တန်းကျောင်းသားကျောင်းသူများအတွက် ရည်ရွယ်ထားသော ဘက်စုံသချာၤ ဉာဏ်စမ်းပြိုင်ပွဲ ဖြစ်ပါသည်။
+
+ဤပြိုင်ပွဲတွင် မတူညီသောအဆင့် ၃ ခုပါဝင်သည်။ အဆင့်တစ်ခုစီတွင် သင်္ချာအခြေခံပဟေဠိများ အမျိုးမျိုးပါဝင်ပါသည်။ ဤပြိုင်ပွဲ၏ ရည်ရွယ်ချက်မှာ သင်္ချာဘာသာရပ်အပေါ် စိတ်အားထက်သန်မှုနှင့် ကျောင်းသားများ၏ သုံးသပ် ဝေဖန် ပိုင်းခြားတွေးခေါ်မှု စွမ်းရည်/အမြင်စွမ်းရည်/ ပြသနာများကို ဖြေရှင်း နိုင်သည့်စွမ်းရည်များ ကို မြှင့်တင်ရန်ဖြစ်သည်။ ထို့ပြင် ယခုပြိုင်ပွဲမျိုးသည် ကျောင်းသားများ၏ ဇွဲ လုံ့လ အပြည့်ဖြင့် လိုရာပန်းတိုင်သို့ တစိုက်မတ်မတ် သွားလိုစိတ်ကိုလည်း မြှင့်တင်ပေးပါသည်။ ဤပြိုင်ပွဲသည် သင်္ချာဝါသနာရှင်ကျောင်းသားများကို စိန်ခေါ် ပြီး သင်္ချာကို နည်းအမျိုးမျိုးဖြင့် နှစ်သက်လာစေရန် ထောက်ပံ့ ပေးပါသည်။ ကျွန်ုပ်တို့၏ ၂၁ကြိမ်မြောက် Mathemania ပြိုင်ပွဲမှ ကြိုဆိုပါသည်။
+
+ပြိုင်ပွဲတွင် ကျောင်းသားကျောင်းသူများသည် မိမိတို့၏ ရွယ်တူချင်းများနှင့် ပျော်ရွင်စွာဉာဏ်ရည် ယှဉ်ပြိုင်ရင်း သင်္ချာဆိုင်ရာ ဘက်စုံစွမ်းရည်များ တိုးတက်စေမည်ဟု ယုံကြည်ပါသည်။
+
+ကျေးဇူးပြုပြီး ပြိုင်ပွဲဝင် အချက်အလက်များနှင့် စည်းကမ်းချက်များအား သေချာဖတ်ရှုပြီးမှ စာရင်းပေးသွင်းပေးပါရန် လေးစားစွာ ပန်ကြားအပ်ပါတယ်။
+
+ဆန္ဒမွန်များစွာဖြင့်
+BFI Education Services`,
+        is_active: false,
+    };
+
+    const announcementContent = announcement ?? fallbackAnnouncement;
+    const parseParagraphs = (content: string) =>
+        content
+            .split(/\n{2,}/)
+            .map((paragraph) => paragraph.trim())
+            .filter(Boolean);
+    const renderParagraph = (paragraph: string, key: string) => {
+        const lines = paragraph.split('\n');
+        return (
+            <p key={key}>
+                {lines.map((line, index) => (
+                    <span key={`${key}-line-${index}`}>
+                        {line}
+                        {index < lines.length - 1 && <br />}
+                    </span>
+                ))}
+            </p>
+        );
+    };
 
     const formatDate = (value?: string | null) => {
         if (!value) return null;
@@ -170,10 +233,10 @@ export default function Welcome() {
                 <div className="flex flex-col gap-6 md:flex-row md:items-center md:justify-between">
                     <div>
                         <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">
-                            IMPORTANT ANNOUCEMENT!
+                            {announcementContent.heading}
                         </p>
                         <h2 className="mt-2 text-2xl font-semibold text-slate-900 md:text-3xl">
-                            Mathemania 2025–2026
+                            {announcementContent.title}
                         </h2>
                     </div>
                     <div className="flex rounded-full border border-slate-200 bg-slate-50 p-1">
@@ -204,89 +267,15 @@ export default function Welcome() {
 
                 <div className="mt-8 space-y-5 text-base leading-relaxed text-slate-700">
                     {activeTab === 'en' ? (
-                        <>
-                            <p>Dear participants,</p>
-                            <p>
-                                Mathemania is an annual math-based puzzle
-                                competition organized by BFI Education Services
-                                since 2005. It comprises three levels, each
-                                featuring a variety of mathematics-based puzzles.
-                            </p>
-                            <p>
-                                The purpose of this contest is to boost enthusiasm
-                                for mathematics and strengthen students’ analytical,
-                                visual, critical thinking, and problem-solving
-                                skills. It also inspires students to develop
-                                perseverance and resilience. Mathemania challenges
-                                mathematics enthusiasts and encourages them to
-                                appreciate the subject in diverse and engaging
-                                ways.
-                            </p>
-                            <p>
-                                We are excited to host the 21st MATHEMANIA
-                                (2025–2026) on 13 September 2025 at three campuses
-                                across Myanmar: SKT International School (Riverside
-                                Campus) in Yangon, Naypyidaw International School
-                                of Acumen (NISA) in Naypyidaw, and Mandalay
-                                International School of Acumen (MISA) in Mandalay.
-                            </p>
-                            <p>
-                                Please kindly read the contest information and rules
-                                & regulations, and sign up!
-                            </p>
-                            <p>
-                                With best wishes,
-                                <br />
-                                BFI Education Services
-                            </p>
-                        </>
+                        parseParagraphs(announcementContent.content_en).map(
+                            (paragraph, index) =>
+                                renderParagraph(paragraph, `en-${index}`),
+                        )
                     ) : (
-                        <>
-                            <p>
-                                မင်္ဂလာပါ စိတ်ပါဝင်စားသော ကျောင်းသား/သူများနှင့်
-                                လူကြီးမိဘများခင်ဗျ,
-                            </p>
-                            <p>
-                                Mathemania ပြိုင်ပွဲသည် ၂၀၀၅ ခုနှစ်မှစတင်၍ BFI
-                                Education Services Co.Ltd မှ နှစ်စဉ်ကျင်းပသော
-                                ပြိုင်ပွဲတစ်ခုဖြစ်ပြီး မူလတန်း၊ အလယ်တန်းနှင့်
-                                အထက်တန်းကျောင်းသားကျောင်းသူများအတွက်
-                                ရည်ရွယ်ထားသော ဘက်စုံသချာၤ ဉာဏ်စမ်းပြိုင်ပွဲ
-                                ဖြစ်ပါသည်။
-                            </p>
-                            <p>
-                                ဤပြိုင်ပွဲတွင် မတူညီသောအဆင့် ၃ ခုပါဝင်သည်။
-                                အဆင့်တစ်ခုစီတွင် သင်္ချာအခြေခံပဟေဠိများ
-                                အမျိုးမျိုးပါဝင်ပါသည်။ ဤပြိုင်ပွဲ၏ ရည်ရွယ်ချက်မှာ
-                                သင်္ချာဘာသာရပ်အပေါ် စိတ်အားထက်သန်မှုနှင့်
-                                ကျောင်းသားများ၏ သုံးသပ် ဝေဖန် ပိုင်းခြားတွေးခေါ်မှု
-                                စွမ်းရည်/အမြင်စွမ်းရည်/ ပြသနာများကို ဖြေရှင်း
-                                နိုင်သည့်စွမ်းရည်များ ကို မြှင့်တင်ရန်ဖြစ်သည်။
-                                ထို့ပြင် ယခုပြိုင်ပွဲမျိုးသည် ကျောင်းသားများ၏ ဇွဲ
-                                လုံ့လ အပြည့်ဖြင့် လိုရာပန်းတိုင်သို့ တစိုက်မတ်မတ်
-                                သွားလိုစိတ်ကိုလည်း မြှင့်တင်ပေးပါသည်။ ဤပြိုင်ပွဲသည်
-                                သင်္ချာဝါသနာရှင်ကျောင်းသားများကို စိန်ခေါ် ပြီး
-                                သင်္ချာကို နည်းအမျိုးမျိုးဖြင့် နှစ်သက်လာစေရန်
-                                ထောက်ပံ့ ပေးပါသည်။ ကျွန်ုပ်တို့၏ ၂၁ကြိမ်မြောက်
-                                Mathemania ပြိုင်ပွဲမှ ကြိုဆိုပါသည်။
-                            </p>
-                            <p>
-                                ပြိုင်ပွဲတွင် ကျောင်းသားကျောင်းသူများသည်
-                                မိမိတို့၏ ရွယ်တူချင်းများနှင့် ပျော်ရွင်စွာဉာဏ်ရည်
-                                ယှဉ်ပြိုင်ရင်း သင်္ချာဆိုင်ရာ ဘက်စုံစွမ်းရည်များ
-                                တိုးတက်စေမည်ဟု ယုံကြည်ပါသည်။
-                            </p>
-                            <p>
-                                ကျေးဇူးပြုပြီး ပြိုင်ပွဲဝင် အချက်အလက်များနှင့်
-                                စည်းကမ်းချက်များအား သေချာဖတ်ရှုပြီးမှ
-                                စာရင်းပေးသွင်းပေးပါရန် လေးစားစွာ ပန်ကြားအပ်ပါတယ်။
-                            </p>
-                            <p>
-                                ဆန္ဒမွန်များစွာဖြင့်
-                                <br />
-                                BFI Education Services
-                            </p>
-                        </>
+                        parseParagraphs(announcementContent.content_mm).map(
+                            (paragraph, index) =>
+                                renderParagraph(paragraph, `mm-${index}`),
+                        )
                     )}
                 </div>
             </section>

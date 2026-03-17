@@ -1,4 +1,3 @@
-import { NavFooter } from '@/components/nav-footer';
 import { NavMain } from '@/components/nav-main';
 import { NavUser } from '@/components/nav-user';
 import {
@@ -13,14 +12,7 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import {
-    BookOpen,
-    CalendarRange,
-    FileText,
-    Folder,
-    LayoutGrid,
-    Users,
-} from 'lucide-react';
+import { CalendarRange, FileText, LayoutGrid, Megaphone, Users } from 'lucide-react';
 import AppLogo from './app-logo';
 
 const baseNavItems: NavItem[] = [
@@ -41,19 +33,6 @@ const baseNavItems: NavItem[] = [
     },
 ];
 
-const footerNavItems: NavItem[] = [
-    {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: Folder,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
-    },
-];
-
 export function AppSidebar() {
     const { auth } = usePage<SharedData>().props;
     const isAdmin = Boolean(auth?.user?.is_admin);
@@ -65,6 +44,11 @@ export function AppSidebar() {
                       title: 'Competition Timeline',
                       href: '/administration-panel/competition-timeline',
                       icon: CalendarRange,
+                  },
+                  {
+                      title: 'Announcements',
+                      href: '/administration-panel/announcements',
+                      icon: Megaphone,
                   },
                   {
                       title: 'Users',
@@ -94,7 +78,6 @@ export function AppSidebar() {
             </SidebarContent>
 
             <SidebarFooter>
-                <NavFooter items={footerNavItems} className="mt-auto" />
                 <NavUser />
             </SidebarFooter>
         </Sidebar>

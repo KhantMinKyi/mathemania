@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Announcement;
 use App\Models\CompetitionTimeline;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
@@ -10,8 +11,20 @@ Route::get('/', function () {
         ->orderBy('id')
         ->get();
 
+    $announcement = Announcement::query()
+        ->where('is_active', true)
+        ->orderByDesc('updated_at')
+        ->first();
+
+    if (! $announcement) {
+        $announcement = Announcement::query()
+            ->orderByDesc('updated_at')
+            ->first();
+    }
+
     return Inertia::render('welcome', [
         'timelines' => $timelines,
+        'announcement' => $announcement,
     ]);
 })->name('home');
 
@@ -108,6 +121,26 @@ Route::prefix('administration-panel')
         ])->name('admin.exam-results.destroy');
 
         Route::middleware('admin')->group(function () {
+            Route::get('announcements', [
+                \App\Http\Controllers\Admin\AnnouncementController::class,
+                'index',
+            ])->name('admin.announcements');
+
+            Route::post('announcements', [
+                \App\Http\Controllers\Admin\AnnouncementController::class,
+                'store',
+            ])->name('admin.announcements.store');
+
+            Route::put('announcements/{announcement}', [
+                \App\Http\Controllers\Admin\AnnouncementController::class,
+                'update',
+            ])->name('admin.announcements.update');
+
+            Route::delete('announcements/{announcement}', [
+                \App\Http\Controllers\Admin\AnnouncementController::class,
+                'destroy',
+            ])->name('admin.announcements.destroy');
+
             Route::get('competition-timeline', [
                 \App\Http\Controllers\Admin\CompetitionTimelineController::class,
                 'index',
