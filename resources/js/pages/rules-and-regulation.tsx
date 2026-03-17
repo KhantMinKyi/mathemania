@@ -1,11 +1,44 @@
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head } from '@inertiajs/react';
+import { Head, usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 type RulesTab = 'en' | 'mm';
 
+type RuleSection = {
+    id: number;
+    order: number;
+    title_en: string;
+    title_mm: string;
+    body_en: string;
+    body_mm: string;
+    is_active: boolean;
+};
+
 export default function RulesAndRegulation() {
+    const { rules = [] } = usePage<{ rules?: RuleSection[] }>().props;
     const [activeTab, setActiveTab] = useState<RulesTab>('en');
+    const hasRules = rules.length > 0;
+
+    const renderBody = (content: string) => {
+        if (!content) return null;
+        const hasHtml = /<\/?[a-z][\s\S]*>/i.test(content);
+        if (hasHtml) {
+            return (
+                <div
+                    className="space-y-3 text-sm leading-relaxed text-slate-700 [&_table]:w-full [&_table]:min-w-[420px] [&_th]:pb-2 [&_th]:text-left [&_th]:text-slate-500 [&_td]:py-3 [&_tr]:border-t [&_tr]:border-slate-200 [&_ul]:list-disc [&_ul]:pl-5 [&_ol]:list-decimal [&_ol]:pl-5 [&_li]:mb-2"
+                    dangerouslySetInnerHTML={{ __html: content }}
+                />
+            );
+        }
+
+        return (
+            <div className="space-y-3 text-sm leading-relaxed text-slate-700">
+                {content.split(/\n{2,}/).map((paragraph, index) => (
+                    <p key={`${index}-${paragraph.slice(0, 10)}`}>{paragraph}</p>
+                ))}
+            </div>
+        );
+    };
 
     return (
         <FrontendLayout>
@@ -65,7 +98,30 @@ export default function RulesAndRegulation() {
                 </div>
 
                 <div className="mt-8 space-y-6 text-sm leading-relaxed text-slate-700">
-                    {activeTab === 'en' ? (
+                    {hasRules ? (
+                        rules.map((rule) => {
+                            const title =
+                                activeTab === 'en'
+                                    ? rule.title_en
+                                    : rule.title_mm;
+                            const body =
+                                activeTab === 'en'
+                                    ? rule.body_en
+                                    : rule.body_mm;
+
+                            return (
+                                <section
+                                    key={rule.id}
+                                    className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm"
+                                >
+                                    <h2 className="text-xl font-semibold text-slate-900">
+                                        {title}
+                                    </h2>
+                                    <div className="mt-3">{renderBody(body)}</div>
+                                </section>
+                            );
+                        })
+                    ) : activeTab === 'en' ? (
                         <>
                             <section className="rounded-3xl border border-slate-200 bg-white p-6 shadow-sm">
                                 <h2 className="text-xl font-semibold text-slate-900">

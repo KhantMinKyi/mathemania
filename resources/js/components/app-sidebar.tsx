@@ -58,6 +58,11 @@ export function AppSidebar() {
                       icon: ClipboardList,
                   },
                   {
+                      title: 'Rules & Regulations',
+                      href: '/administration-panel/rules-and-regulation',
+                      icon: FileText,
+                  },
+                  {
                       title: 'Announcements',
                       href: '/administration-panel/announcements',
                       icon: Megaphone,

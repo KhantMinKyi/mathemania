@@ -2,6 +2,7 @@
 
 use App\Models\Announcement;
 use App\Models\CompetitionTimeline;
+use App\Models\RuleRegulation;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -39,7 +40,15 @@ Route::get('bank-qr/{bankAccount}', [
 ])->name('bank-qr.show');
 
 Route::get('rules-and-regulation', function () {
-    return Inertia::render('rules-and-regulation');
+    $rules = RuleRegulation::query()
+        ->where('is_active', true)
+        ->orderBy('order')
+        ->orderBy('id')
+        ->get();
+
+    return Inertia::render('rules-and-regulation', [
+        'rules' => $rules,
+    ]);
 })->name('rules-and-regulation');
 
 Route::get('privacy-policy', function () {
@@ -186,6 +195,26 @@ Route::prefix('administration-panel')
                 \App\Http\Controllers\Admin\AnnouncementController::class,
                 'destroy',
             ])->name('admin.announcements.destroy');
+
+            Route::get('rules-and-regulation', [
+                \App\Http\Controllers\Admin\RuleRegulationController::class,
+                'index',
+            ])->name('admin.rules-and-regulation');
+
+            Route::post('rules-and-regulation', [
+                \App\Http\Controllers\Admin\RuleRegulationController::class,
+                'store',
+            ])->name('admin.rules-and-regulation.store');
+
+            Route::put('rules-and-regulation/{ruleRegulation}', [
+                \App\Http\Controllers\Admin\RuleRegulationController::class,
+                'update',
+            ])->name('admin.rules-and-regulation.update');
+
+            Route::delete('rules-and-regulation/{ruleRegulation}', [
+                \App\Http\Controllers\Admin\RuleRegulationController::class,
+                'destroy',
+            ])->name('admin.rules-and-regulation.destroy');
 
             Route::get('competition-timeline', [
                 \App\Http\Controllers\Admin\CompetitionTimelineController::class,
