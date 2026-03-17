@@ -58,7 +58,7 @@ export default function Dashboard() {
                                 <p className="text-xs uppercase tracking-[0.2em] text-slate-200">
                                     Timeline Items
                                 </p>
-                                <p className="mt-2 text-2xl font-semibold">
+                                <p className="mt-2 text-2xl font-semibold dark:admin-accent">
                                     {stats?.timelines ?? 0}
                                 </p>
                             </div>
@@ -66,7 +66,7 @@ export default function Dashboard() {
                                 <p className="text-xs uppercase tracking-[0.2em] text-slate-200">
                                     Users
                                 </p>
-                                <p className="mt-2 text-2xl font-semibold">
+                                <p className="mt-2 text-2xl font-semibold dark:admin-accent-strong">
                                     {stats?.users ?? 0}
                                 </p>
                             </div>

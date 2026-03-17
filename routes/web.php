@@ -28,9 +28,15 @@ Route::get('/', function () {
     ]);
 })->name('home');
 
-Route::get('register-here', function () {
-    return Inertia::render('register-here');
-})->name('register.here');
+Route::get('register-here', [
+    \App\Http\Controllers\RegisterHereController::class,
+    'index',
+])->name('register.here');
+
+Route::get('bank-qr/{bankAccount}', [
+    \App\Http\Controllers\RegisterHereController::class,
+    'qrImage',
+])->name('bank-qr.show');
 
 Route::get('rules-and-regulation', function () {
     return Inertia::render('rules-and-regulation');
@@ -121,6 +127,46 @@ Route::prefix('administration-panel')
         ])->name('admin.exam-results.destroy');
 
         Route::middleware('admin')->group(function () {
+            Route::get('registration', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'index',
+            ])->name('admin.registration');
+
+            Route::post('registration/settings', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'updateSettings',
+            ])->name('admin.registration.settings');
+
+            Route::post('registration/steps', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'storeStep',
+            ])->name('admin.registration.steps.store');
+
+            Route::put('registration/steps/{registrationStep}', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'updateStep',
+            ])->name('admin.registration.steps.update');
+
+            Route::delete('registration/steps/{registrationStep}', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'destroyStep',
+            ])->name('admin.registration.steps.destroy');
+
+            Route::post('registration/banks', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'storeBank',
+            ])->name('admin.registration.banks.store');
+
+            Route::post('registration/banks/{bankAccount}', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'updateBank',
+            ])->name('admin.registration.banks.update');
+
+            Route::delete('registration/banks/{bankAccount}', [
+                \App\Http\Controllers\Admin\RegistrationController::class,
+                'destroyBank',
+            ])->name('admin.registration.banks.destroy');
+
             Route::get('announcements', [
                 \App\Http\Controllers\Admin\AnnouncementController::class,
                 'index',

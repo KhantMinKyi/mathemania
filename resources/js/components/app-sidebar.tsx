@@ -12,7 +12,14 @@ import {
 import { dashboard } from '@/routes';
 import { type NavItem, type SharedData } from '@/types';
 import { Link, usePage } from '@inertiajs/react';
-import { CalendarRange, FileText, LayoutGrid, Megaphone, Users } from 'lucide-react';
+import {
+    CalendarRange,
+    ClipboardList,
+    FileText,
+    LayoutGrid,
+    Megaphone,
+    Users,
+} from 'lucide-react';
 import AppLogo from './app-logo';
 
 const baseNavItems: NavItem[] = [
@@ -44,6 +51,11 @@ export function AppSidebar() {
                       title: 'Competition Timeline',
                       href: '/administration-panel/competition-timeline',
                       icon: CalendarRange,
+                  },
+                  {
+                      title: 'Registration',
+                      href: '/administration-panel/registration',
+                      icon: ClipboardList,
                   },
                   {
                       title: 'Announcements',
