@@ -4,7 +4,8 @@ import AppLayout from '@/layouts/app-layout';
 import SettingsLayout from '@/layouts/settings/layout';
 import { type BreadcrumbItem } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Form, Head } from '@inertiajs/react';
+import Seo from '@/components/seo';
+import { Form } from '@inertiajs/react';
 import { useRef } from 'react';
 
 import HeadingSmall from '@/components/heading-small';
@@ -26,7 +27,11 @@ export default function Password() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Password settings" />
+            <Seo
+                title="Password settings"
+                description="Manage your Mathemania account password."
+                noindex
+            />
 
             <SettingsLayout>
                 <div className="space-y-6">

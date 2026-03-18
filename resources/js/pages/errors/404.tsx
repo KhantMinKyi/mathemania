@@ -1,15 +1,15 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, Link } from '@inertiajs/react';
+import { Link } from '@inertiajs/react';
 
 export default function NotFound() {
     return (
         <FrontendLayout>
-            <Head title="Page Not Found">
-                <meta
-                    name="description"
-                    content="The page you are looking for could not be found."
-                />
-            </Head>
+            <Seo
+                title="Page Not Found"
+                description="The page you are looking for could not be found."
+                noindex
+            />
             <section className="mx-auto w-full max-w-6xl px-4 py-16">
                 <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-white p-8 shadow-sm md:p-12">
                     <div className="pointer-events-none absolute -right-24 -top-24 h-48 w-48 rounded-full bg-cyan-100/70 blur-2xl" />

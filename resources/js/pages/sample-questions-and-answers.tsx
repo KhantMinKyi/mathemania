@@ -1,5 +1,6 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
 const categories = [
     {
@@ -35,25 +36,11 @@ export default function SampleQuestionsAndAnswers() {
 
     return (
         <FrontendLayout>
-            <Head title="Sample Questions and Answers">
-                <meta
-                    name="description"
-                    content="Download Mathemania sample questions and answers for primary, lower-secondary, and upper-secondary levels."
-                />
-                <meta
-                    name="keywords"
-                    content="Mathemania sample questions, answers, primary, lower-secondary, upper-secondary"
-                />
-                <meta
-                    property="og:title"
-                    content="Mathemania Sample Questions and Answers"
-                />
-                <meta
-                    property="og:description"
-                    content="Practice with official Mathemania sample questions and answers."
-                />
-                <meta property="og:type" content="website" />
-            </Head>
+            <Seo
+                title="Sample Questions and Answers"
+                description="Download Mathemania sample questions and answers for primary, lower-secondary, and upper-secondary levels."
+                keywords="Mathemania sample questions, answers, primary, lower-secondary, upper-secondary"
+            />
             <section className="mx-auto w-full max-w-6xl px-4 py-10">
                 <header className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">

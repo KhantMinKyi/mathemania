@@ -1,5 +1,6 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { useRef, useState } from 'react';
 
 const heroVideoSrc =
@@ -46,9 +47,10 @@ const examCenters = [
 ];
 
 export default function Welcome() {
-    const { timelines = [], announcement } = usePage<{
+    const { timelines = [], announcement, appUrl } = usePage<{
         timelines?: Timeline[];
         announcement?: Announcement | null;
+        appUrl?: string;
     }>().props;
     const [activeTab, setActiveTab] = useState<AnnouncementTab>('en');
     const slideRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -165,9 +167,25 @@ BFI Education Services`,
         }).format(date);
     };
 
+    const jsonLd = appUrl
+        ? {
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: 'Mathemania',
+              url: appUrl,
+              logo: new URL('/img/mathemania.png', appUrl).toString(),
+              sameAs: ['https://bfi.edu.mm'],
+          }
+        : undefined;
+
     return (
         <FrontendLayout transparentHeader>
-            <Head title="Welcome" />
+            <Seo
+                title="Mathemania 2025–2026"
+                description="Official Mathemania math puzzle competition by BFI Education Services. View announcements, exam dates, venues, and registration information."
+                image="/img/mathemania.png"
+                jsonLd={jsonLd}
+            />
             <section className=" h-screen overflow-hidden">
                 <video
                     className="absolute inset-0 h-full w-full object-cover"

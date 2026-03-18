@@ -1,5 +1,6 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { useState } from 'react';
 
 type RulesTab = 'en' | 'mm';
@@ -42,22 +43,11 @@ export default function RulesAndRegulation() {
 
     return (
         <FrontendLayout>
-            <Head title="Rules and Regulation">
-                <meta
-                    name="description"
-                    content="Mathemania competition rules, eligibility, schedules, venues, awards, and registration details."
-                />
-                <meta
-                    name="keywords"
-                    content="Mathemania rules, math competition, eligibility, registration, Myanmar"
-                />
-                <meta property="og:title" content="Mathemania Rules and Regulations" />
-                <meta
-                    property="og:description"
-                    content="Read the official Mathemania rules and regulations in English and Myanmar."
-                />
-                <meta property="og:type" content="website" />
-            </Head>
+            <Seo
+                title="Rules and Regulations"
+                description="Mathemania competition rules, eligibility, schedules, venues, awards, and registration details."
+                keywords="Mathemania rules, math competition, eligibility, registration, Myanmar"
+            />
             <section className="mx-auto w-full max-w-6xl px-4 py-10">
                 <header className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-500">

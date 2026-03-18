@@ -2,7 +2,8 @@ import ProfileController from '@/actions/App/Http/Controllers/Settings/ProfileCo
 import { send } from '@/routes/verification';
 import { type BreadcrumbItem, type SharedData } from '@/types';
 import { Transition } from '@headlessui/react';
-import { Form, Head, Link, usePage } from '@inertiajs/react';
+import Seo from '@/components/seo';
+import { Form, Link, usePage } from '@inertiajs/react';
 
 import DeleteUser from '@/components/delete-user';
 import HeadingSmall from '@/components/heading-small';
@@ -32,7 +33,11 @@ export default function Profile({
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Profile settings" />
+            <Seo
+                title="Profile settings"
+                description="Update your Mathemania profile information."
+                noindex
+            />
 
             <SettingsLayout>
                 <div className="space-y-6">

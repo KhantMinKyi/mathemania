@@ -1,7 +1,8 @@
+import Seo from '@/components/seo';
 import AppLayout from '@/layouts/app-layout';
 import { dashboard } from '@/routes';
 import { type BreadcrumbItem } from '@/types';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 
 type Timeline = {
     id: number;
@@ -37,7 +38,11 @@ export default function Dashboard() {
 
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Dashboard" />
+            <Seo
+                title="Dashboard"
+                description="Mathemania administration dashboard for timelines, registrations, and users."
+                noindex
+            />
             <div className="flex h-full flex-1 flex-col gap-6 overflow-x-auto rounded-xl p-4">
                 <div className="relative overflow-hidden rounded-3xl border border-slate-200 bg-gradient-to-r from-slate-900 via-slate-800 to-slate-700 p-8 text-white shadow-lg">
                     <div className="absolute right-0 top-0 h-full w-1/2 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.18),_transparent_65%)]" />

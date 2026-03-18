@@ -1,5 +1,6 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, Link, usePage } from '@inertiajs/react';
+import { Link, usePage } from '@inertiajs/react';
 import { useMemo, useState } from 'react';
 
 type StepsTab = 'en' | 'mm' | 'bank';
@@ -74,22 +75,11 @@ export default function RegisterHere() {
 
     return (
         <FrontendLayout>
-            <Head title="Mathemania Registration">
-                <meta
-                    name="description"
-                    content="Mathemania registration steps, bank account details, and official registration form link."
-                />
-                <meta
-                    name="keywords"
-                    content="Mathemania registration, BFI Education Services, math competition registration, Myanmar"
-                />
-                <meta property="og:title" content="Mathemania Registration" />
-                <meta
-                    property="og:description"
-                    content="Follow the official Mathemania registration steps and submit your form."
-                />
-                <meta property="og:type" content="website" />
-            </Head>
+            <Seo
+                title="Mathemania Registration"
+                description="Mathemania registration steps, bank account details, and the official registration form link."
+                keywords="Mathemania registration, BFI Education Services, math competition registration, Myanmar"
+            />
             <section className="mx-auto w-full max-w-6xl px-4 py-10 text-slate-800">
                 <header className="space-y-3">
                     <p className="text-xs font-semibold uppercase tracking-[0.35em] text-slate-700">

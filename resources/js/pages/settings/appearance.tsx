@@ -1,4 +1,4 @@
-import { Head } from '@inertiajs/react';
+import Seo from '@/components/seo';
 
 import AppearanceTabs from '@/components/appearance-tabs';
 import HeadingSmall from '@/components/heading-small';
@@ -18,7 +18,11 @@ const breadcrumbs: BreadcrumbItem[] = [
 export default function Appearance() {
     return (
         <AppLayout breadcrumbs={breadcrumbs}>
-            <Head title="Appearance settings" />
+            <Seo
+                title="Appearance settings"
+                description="Adjust your Mathemania account appearance preferences."
+                noindex
+            />
 
             <SettingsLayout>
                 <div className="space-y-6">

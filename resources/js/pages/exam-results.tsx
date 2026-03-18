@@ -1,5 +1,6 @@
+import Seo from '@/components/seo';
 import FrontendLayout from '@/layouts/frontend-layout';
-import { Head, usePage } from '@inertiajs/react';
+import { usePage } from '@inertiajs/react';
 import { useState } from 'react';
 import * as XLSX from 'xlsx';
 
@@ -112,7 +113,11 @@ export default function ExamResults() {
 
     return (
         <FrontendLayout>
-            <Head title="Exam Results" />
+            <Seo
+                title="Exam Results"
+                description="View and download Mathemania exam results for primary, lower-secondary, and upper-secondary levels."
+                keywords="Mathemania exam results, math competition results, primary, lower-secondary, upper-secondary"
+            />
             <div className="mx-auto flex w-full max-w-6xl flex-col gap-8 px-4 sm:gap-10">
                 <section className="rounded-3xl border border-slate-200 bg-white/80 p-6 shadow-sm backdrop-blur sm:p-8">
                     <div className="flex flex-col gap-6 lg:flex-row lg:items-center lg:justify-between">
