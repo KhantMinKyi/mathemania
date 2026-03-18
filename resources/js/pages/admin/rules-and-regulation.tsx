@@ -1,6 +1,18 @@
 import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
+import { Editor } from '@tinymce/tinymce-react';
+import 'tinymce/tinymce';
+import 'tinymce/icons/default';
+import 'tinymce/models/dom';
+import 'tinymce/themes/silver';
+import 'tinymce/plugins/autoresize';
+import 'tinymce/plugins/code';
+import 'tinymce/plugins/link';
+import 'tinymce/plugins/lists';
+import 'tinymce/plugins/table';
+import 'tinymce/skins/ui/oxide/skin.min.css';
+import 'tinymce/skins/content/default/content.min.css';
 import { useState } from 'react';
 
 type RuleSection = {
@@ -182,14 +194,26 @@ export default function RulesAndRegulationAdmin() {
                             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                                 English Body
                             </label>
-                            <textarea
-                                rows={6}
-                                className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+                            <Editor
                                 value={data.body_en}
-                                onChange={(event) =>
-                                    setData('body_en', event.target.value)
+                                onEditorChange={(value) =>
+                                    setData('body_en', value)
                                 }
-                                placeholder="Use HTML tags if you need tables or lists."
+                                init={{
+                                    height: 360,
+                                    license_key: 'gpl',
+                                    promotion: false,
+                                    branding: false,
+                                    skin: false,
+                                    content_css: false,
+                                    menubar:
+                                        'file edit view insert format tools table help',
+                                    plugins: 'link lists table code autoresize',
+                                    toolbar:
+                                        'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link table | removeformat | code',
+                                    content_style:
+                                        'body { font-family: "Instrument Sans", sans-serif; font-size: 14px; }',
+                                }}
                             />
                             {errors.body_en && (
                                 <p className="text-xs text-red-600">{errors.body_en}</p>
@@ -199,14 +223,26 @@ export default function RulesAndRegulationAdmin() {
                             <label className="text-xs font-semibold uppercase tracking-wide text-slate-500">
                                 Myanmar Body
                             </label>
-                            <textarea
-                                rows={6}
-                                className="rounded-md border border-slate-200 bg-white px-3 py-2 text-sm text-slate-700"
+                            <Editor
                                 value={data.body_mm}
-                                onChange={(event) =>
-                                    setData('body_mm', event.target.value)
+                                onEditorChange={(value) =>
+                                    setData('body_mm', value)
                                 }
-                                placeholder="Use HTML tags if you need tables or lists."
+                                init={{
+                                    height: 360,
+                                    license_key: 'gpl',
+                                    promotion: false,
+                                    branding: false,
+                                    skin: false,
+                                    content_css: false,
+                                    menubar:
+                                        'file edit view insert format tools table help',
+                                    plugins: 'link lists table code autoresize',
+                                    toolbar:
+                                        'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link table | removeformat | code',
+                                    content_style:
+                                        'body { font-family: "Instrument Sans", sans-serif; font-size: 14px; }',
+                                }}
                             />
                             {errors.body_mm && (
                                 <p className="text-xs text-red-600">{errors.body_mm}</p>
