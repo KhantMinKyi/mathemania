@@ -2,17 +2,6 @@ import AppLayout from '@/layouts/app-layout';
 import { type BreadcrumbItem } from '@/types';
 import { Head, router, useForm, usePage } from '@inertiajs/react';
 import { Editor } from '@tinymce/tinymce-react';
-import 'tinymce/tinymce';
-import 'tinymce/icons/default';
-import 'tinymce/models/dom';
-import 'tinymce/themes/silver';
-import 'tinymce/plugins/autoresize';
-import 'tinymce/plugins/code';
-import 'tinymce/plugins/link';
-import 'tinymce/plugins/lists';
-import 'tinymce/plugins/table';
-import 'tinymce/skins/ui/oxide/skin.min.css';
-import 'tinymce/skins/content/default/content.min.css';
 import { useState } from 'react';
 
 type RuleSection = {
@@ -195,6 +184,7 @@ export default function RulesAndRegulationAdmin() {
                                 English Body
                             </label>
                             <Editor
+                                tinymceScriptSrc="/tinymce/tinymce.min.js"
                                 value={data.body_en}
                                 onEditorChange={(value) =>
                                     setData('body_en', value)
@@ -204,11 +194,14 @@ export default function RulesAndRegulationAdmin() {
                                     license_key: 'gpl',
                                     promotion: false,
                                     branding: false,
-                                    skin: false,
-                                    content_css: false,
+                                    base_url: '/tinymce',
+                                    skin_url: '/tinymce/skins/ui/oxide',
+                                    content_css:
+                                        '/tinymce/skins/content/default/content.min.css',
                                     menubar:
                                         'file edit view insert format tools table help',
-                                    plugins: 'link lists table code autoresize',
+                                    plugins:
+                                        'link lists table code autoresize paste',
                                     toolbar:
                                         'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link table | removeformat | code',
                                     content_style:
@@ -224,6 +217,7 @@ export default function RulesAndRegulationAdmin() {
                                 Myanmar Body
                             </label>
                             <Editor
+                                tinymceScriptSrc="/tinymce/tinymce.min.js"
                                 value={data.body_mm}
                                 onEditorChange={(value) =>
                                     setData('body_mm', value)
@@ -233,11 +227,14 @@ export default function RulesAndRegulationAdmin() {
                                     license_key: 'gpl',
                                     promotion: false,
                                     branding: false,
-                                    skin: false,
-                                    content_css: false,
+                                    base_url: '/tinymce',
+                                    skin_url: '/tinymce/skins/ui/oxide',
+                                    content_css:
+                                        '/tinymce/skins/content/default/content.min.css',
                                     menubar:
                                         'file edit view insert format tools table help',
-                                    plugins: 'link lists table code autoresize',
+                                    plugins:
+                                        'link lists table code autoresize paste',
                                     toolbar:
                                         'undo redo | blocks | bold italic underline | alignleft aligncenter alignright | bullist numlist | link table | removeformat | code',
                                     content_style:
