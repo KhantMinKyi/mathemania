@@ -38,6 +38,26 @@ const baseNavItems: NavItem[] = [
         href: '/administration-panel/exam-results',
         icon: FileText,
     },
+    {
+        title: 'Competition Timeline',
+        href: '/administration-panel/competition-timeline',
+        icon: CalendarRange,
+    },
+    {
+        title: 'Registration',
+        href: '/administration-panel/registration',
+        icon: ClipboardList,
+    },
+    {
+        title: 'Rules & Regulations',
+        href: '/administration-panel/rules-and-regulation',
+        icon: FileText,
+    },
+    {
+        title: 'Announcements',
+        href: '/administration-panel/announcements',
+        icon: Megaphone,
+    },
 ];
 
 export function AppSidebar() {
@@ -47,26 +67,6 @@ export function AppSidebar() {
         ...baseNavItems,
         ...(isAdmin
             ? [
-                  {
-                      title: 'Competition Timeline',
-                      href: '/administration-panel/competition-timeline',
-                      icon: CalendarRange,
-                  },
-                  {
-                      title: 'Registration',
-                      href: '/administration-panel/registration',
-                      icon: ClipboardList,
-                  },
-                  {
-                      title: 'Rules & Regulations',
-                      href: '/administration-panel/rules-and-regulation',
-                      icon: FileText,
-                  },
-                  {
-                      title: 'Announcements',
-                      href: '/administration-panel/announcements',
-                      icon: Megaphone,
-                  },
                   {
                       title: 'Users',
                       href: '/administration-panel/users',

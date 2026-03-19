@@ -135,107 +135,107 @@ Route::prefix('administration-panel')
             'destroy',
         ])->name('admin.exam-results.destroy');
 
+        Route::get('registration', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'index',
+        ])->name('admin.registration');
+
+        Route::post('registration/settings', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'updateSettings',
+        ])->name('admin.registration.settings');
+
+        Route::post('registration/steps', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'storeStep',
+        ])->name('admin.registration.steps.store');
+
+        Route::put('registration/steps/{registrationStep}', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'updateStep',
+        ])->name('admin.registration.steps.update');
+
+        Route::delete('registration/steps/{registrationStep}', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'destroyStep',
+        ])->name('admin.registration.steps.destroy');
+
+        Route::post('registration/banks', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'storeBank',
+        ])->name('admin.registration.banks.store');
+
+        Route::post('registration/banks/{bankAccount}', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'updateBank',
+        ])->name('admin.registration.banks.update');
+
+        Route::delete('registration/banks/{bankAccount}', [
+            \App\Http\Controllers\Admin\RegistrationController::class,
+            'destroyBank',
+        ])->name('admin.registration.banks.destroy');
+
+        Route::get('announcements', [
+            \App\Http\Controllers\Admin\AnnouncementController::class,
+            'index',
+        ])->name('admin.announcements');
+
+        Route::post('announcements', [
+            \App\Http\Controllers\Admin\AnnouncementController::class,
+            'store',
+        ])->name('admin.announcements.store');
+
+        Route::put('announcements/{announcement}', [
+            \App\Http\Controllers\Admin\AnnouncementController::class,
+            'update',
+        ])->name('admin.announcements.update');
+
+        Route::delete('announcements/{announcement}', [
+            \App\Http\Controllers\Admin\AnnouncementController::class,
+            'destroy',
+        ])->name('admin.announcements.destroy');
+
+        Route::get('rules-and-regulation', [
+            \App\Http\Controllers\Admin\RuleRegulationController::class,
+            'index',
+        ])->name('admin.rules-and-regulation');
+
+        Route::post('rules-and-regulation', [
+            \App\Http\Controllers\Admin\RuleRegulationController::class,
+            'store',
+        ])->name('admin.rules-and-regulation.store');
+
+        Route::put('rules-and-regulation/{ruleRegulation}', [
+            \App\Http\Controllers\Admin\RuleRegulationController::class,
+            'update',
+        ])->name('admin.rules-and-regulation.update');
+
+        Route::delete('rules-and-regulation/{ruleRegulation}', [
+            \App\Http\Controllers\Admin\RuleRegulationController::class,
+            'destroy',
+        ])->name('admin.rules-and-regulation.destroy');
+
+        Route::get('competition-timeline', [
+            \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+            'index',
+        ])->name('admin.competition-timeline');
+
+        Route::post('competition-timeline', [
+            \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+            'store',
+        ])->name('admin.competition-timeline.store');
+
+        Route::put('competition-timeline/{competitionTimeline}', [
+            \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+            'update',
+        ])->name('admin.competition-timeline.update');
+
+        Route::delete('competition-timeline/{competitionTimeline}', [
+            \App\Http\Controllers\Admin\CompetitionTimelineController::class,
+            'destroy',
+        ])->name('admin.competition-timeline.destroy');
+
         Route::middleware('admin')->group(function () {
-            Route::get('registration', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'index',
-            ])->name('admin.registration');
-
-            Route::post('registration/settings', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'updateSettings',
-            ])->name('admin.registration.settings');
-
-            Route::post('registration/steps', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'storeStep',
-            ])->name('admin.registration.steps.store');
-
-            Route::put('registration/steps/{registrationStep}', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'updateStep',
-            ])->name('admin.registration.steps.update');
-
-            Route::delete('registration/steps/{registrationStep}', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'destroyStep',
-            ])->name('admin.registration.steps.destroy');
-
-            Route::post('registration/banks', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'storeBank',
-            ])->name('admin.registration.banks.store');
-
-            Route::post('registration/banks/{bankAccount}', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'updateBank',
-            ])->name('admin.registration.banks.update');
-
-            Route::delete('registration/banks/{bankAccount}', [
-                \App\Http\Controllers\Admin\RegistrationController::class,
-                'destroyBank',
-            ])->name('admin.registration.banks.destroy');
-
-            Route::get('announcements', [
-                \App\Http\Controllers\Admin\AnnouncementController::class,
-                'index',
-            ])->name('admin.announcements');
-
-            Route::post('announcements', [
-                \App\Http\Controllers\Admin\AnnouncementController::class,
-                'store',
-            ])->name('admin.announcements.store');
-
-            Route::put('announcements/{announcement}', [
-                \App\Http\Controllers\Admin\AnnouncementController::class,
-                'update',
-            ])->name('admin.announcements.update');
-
-            Route::delete('announcements/{announcement}', [
-                \App\Http\Controllers\Admin\AnnouncementController::class,
-                'destroy',
-            ])->name('admin.announcements.destroy');
-
-            Route::get('rules-and-regulation', [
-                \App\Http\Controllers\Admin\RuleRegulationController::class,
-                'index',
-            ])->name('admin.rules-and-regulation');
-
-            Route::post('rules-and-regulation', [
-                \App\Http\Controllers\Admin\RuleRegulationController::class,
-                'store',
-            ])->name('admin.rules-and-regulation.store');
-
-            Route::put('rules-and-regulation/{ruleRegulation}', [
-                \App\Http\Controllers\Admin\RuleRegulationController::class,
-                'update',
-            ])->name('admin.rules-and-regulation.update');
-
-            Route::delete('rules-and-regulation/{ruleRegulation}', [
-                \App\Http\Controllers\Admin\RuleRegulationController::class,
-                'destroy',
-            ])->name('admin.rules-and-regulation.destroy');
-
-            Route::get('competition-timeline', [
-                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
-                'index',
-            ])->name('admin.competition-timeline');
-
-            Route::post('competition-timeline', [
-                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
-                'store',
-            ])->name('admin.competition-timeline.store');
-
-            Route::put('competition-timeline/{competitionTimeline}', [
-                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
-                'update',
-            ])->name('admin.competition-timeline.update');
-
-            Route::delete('competition-timeline/{competitionTimeline}', [
-                \App\Http\Controllers\Admin\CompetitionTimelineController::class,
-                'destroy',
-            ])->name('admin.competition-timeline.destroy');
-
             Route::get('users', [
                 \App\Http\Controllers\Admin\UserController::class,
                 'index',
