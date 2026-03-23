@@ -4,6 +4,7 @@ use App\Models\Announcement;
 use App\Models\CompetitionTimeline;
 use App\Models\RuleRegulation;
 use App\Models\User;
+use App\Support\Seo\SitemapBuilder;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 Route::get('/', function () {
@@ -80,6 +81,14 @@ Route::get('exam-results/{category}/{type}', [
     \App\Http\Controllers\Admin\ExamResultsController::class,
     'download',
 ])->where(['category' => '(primary|lower-secondary|upper-secondary)', 'type' => '(results)']);
+
+Route::get('sitemap.xml', function (SitemapBuilder $sitemapBuilder) {
+    $path = $sitemapBuilder->writeToPublicPath();
+
+    return response()->file($path, [
+        'Content-Type' => 'application/xml; charset=UTF-8',
+    ]);
+})->name('sitemap');
 
 Route::fallback(function () {
     return Inertia::render('errors/404')->toResponse(request())->setStatusCode(404);
